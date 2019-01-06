@@ -1,47 +1,46 @@
-#linux 
-1.¿ªÊ¼°²×°£¨½¨Òé´ó¼ÒĞÂ½¨Ò»¸öÎÄ¼ş¼Ğ£©£¬È»ºó½«ÎÄ¼ş¸´ÖÆµ½ĞÂ½¨µÄÎÄ¼ş¼ĞÖĞ 
-ÏÂİdarm-linux-gcc ‰º¿s™n (½»²æ¹¤¾ßæœ) 
-ÏÂİdlinux-2.6.32.2 ‰º¿s™n (linuxÔ´´ú´a) 
+1.å¼€å§‹å®‰è£…ï¼ˆå»ºè®®å¤§å®¶æ–°å»ºä¸€ä¸ªæ–‡ä»¶å¤¹ï¼‰ï¼Œç„¶åå°†æ–‡ä»¶å¤åˆ¶åˆ°æ–°å»ºçš„æ–‡ä»¶å¤¹ä¸­ 
+ä¸‹è¼‰arm-linux-gcc å£“ç¸®æª” (äº¤å‰å·¥å…·éˆ) 
+ä¸‹è¼‰linux-2.6.32.2 å£“ç¸®æª” (linuxæºä»£ç¢¼) 
 
  
-2.°²Ñbarm-linux-gcc ½»²æ¹¤¾ßæœ 
-cdµ½ÏÂİdÄ¿ä› ÊäÈëÃüÁî£º sudo tar xvzf arm-linux-gcc-4.5.1-v6-vfp-20120301.tgz 
-°²×°Íê³Éºó£¬ÊäÈëlsÃüÁî£¬¿ÉÒÔ¿´µ½Ò»¸öoptÎÄ¼ş¼Ğ 
+2.å®‰è£arm-linux-gcc äº¤å‰å·¥å…·éˆ 
+cdåˆ°ä¸‹è¼‰ç›®éŒ„ è¾“å…¥å‘½ä»¤ï¼š sudo tar xvzf arm-linux-gcc-4.5.1-v6-vfp-20120301.tgz 
+å®‰è£…å®Œæˆåï¼Œè¾“å…¥lså‘½ä»¤ï¼Œå¯ä»¥çœ‹åˆ°ä¸€ä¸ªoptæ–‡ä»¶å¤¹ 
  
-tar xvzf arm-linux-gcc-4.5.1-v6-vfp-20120301.tgz -C /abc (-C /abc ½â‰º¿sµ½Ä¿ä›abc) 
+tar xvzf arm-linux-gcc-4.5.1-v6-vfp-20120301.tgz -C /abc (-C /abc è§£å£“ç¸®åˆ°ç›®éŒ„abc) 
  
  
  
-3.ĞŞ¸Ä»·¾³±äÁ¿£¬°Ñ½»²æ±àÒëÆ÷µÄÂ·¾¶¼ÓÈëµ½PATH£º 
-µ½opt/FriendlyARM/toolschain/4.5.1/binÊäÈëpwdÃüÁî£¬²é¿´µ±Ç°Â·¾¶µÄ¾ø¶ÔÂ·¾¶ 
-½ÓÏÂíİ”ÈëcmdÔö¼ÓÂ·½ 
+3.ä¿®æ”¹ç¯å¢ƒå˜é‡ï¼ŒæŠŠäº¤å‰ç¼–è¯‘å™¨çš„è·¯å¾„åŠ å…¥åˆ°PATHï¼š 
+åˆ°opt/FriendlyARM/toolschain/4.5.1/binè¾“å…¥pwdå‘½ä»¤ï¼ŒæŸ¥çœ‹å½“å‰è·¯å¾„çš„ç»å¯¹è·¯å¾„ 
+æ¥ä¸‹ä¾†è¼¸å…¥cmdå¢åŠ è·¯å¾‘ 
 export PATH=$PATH:/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
  
-ÓÀ¾ÃÔö¼ÓÂ·½£ºĞŞ¸Ä.bashrc 
-/home ~/.bashrc £ºÔÚ.bashrc×îÏÂÃæÔö¼Óexport PATH=$PATH:/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
-ÔËĞĞ½Å±¾£¬ÈÃ»·¾³±äÁ¿ÉúĞ§ 
+æ°¸ä¹…å¢åŠ è·¯å¾‘ï¼šä¿®æ”¹.bashrc 
+/home ~/.bashrc ï¼šåœ¨.bashrcæœ€ä¸‹é¢å¢åŠ export PATH=$PATH:/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
+è¿è¡Œè„šæœ¬ï¼Œè®©ç¯å¢ƒå˜é‡ç”Ÿæ•ˆ 
 source ~/.bashrc 
  
-Ò²¿ÉÒÔĞŞ¸Ä/etc/profile í¼ÓÈëÂ·½ 
-ÔÚ#Path manipulationÏÂÃæ¼ÓÈëÂ·½/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
-ÔËĞĞ½Å±¾£¬ÈÃ»·¾³±äÁ¿ÉúĞ§ > source /etc/profile 
+ä¹Ÿå¯ä»¥ä¿®æ”¹/etc/profile ä¾†åŠ å…¥è·¯å¾‘ 
+åœ¨#Path manipulationä¸‹é¢åŠ å…¥è·¯å¾‘/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
+è¿è¡Œè„šæœ¬ï¼Œè®©ç¯å¢ƒå˜é‡ç”Ÿæ•ˆ > source /etc/profile 
  
  
  
-İ”Èëcmd ´_ÕJÂ·½£ºecho $PATH 
-İ”Èëcmd ´_ÕJ¾×gÆ÷: arm-linux-gcc hello.c -o hello(¾×ghello.c™n) 
-İ”Èëcmd ´_ÕJ°æ±¾: arm-linux-readefl -a hello(²é¿´¾×gÍêááµÄhello™n) 
+è¼¸å…¥cmd ç¢ºèªè·¯å¾‘ï¼šecho $PATH 
+è¼¸å…¥cmd ç¢ºèªç·¨è­¯å™¨: arm-linux-gcc hello.c -o hello(ç·¨è­¯hello.cæª”) 
+è¼¸å…¥cmd ç¢ºèªç‰ˆæœ¬: arm-linux-readefl -a hello(æŸ¥çœ‹ç·¨è­¯å®Œå¾Œçš„helloæª”) 
  
  
 #cp config_mini2440_P43 .config 
-#make mini2440_defconfig ;Ê¹ÓÃ Linux ¹Ù·½×Ô´øµÄ mini2440 ÅäÖÃ 
+#make mini2440_defconfig ;ä½¿ç”¨ Linux å®˜æ–¹è‡ªå¸¦çš„ mini2440 é…ç½® 
 #make menuconfig 
-#make zImage (arch/arm/bootÄ¿Â¼ÏÂÉú³ÉlinuxÄÚºËÓ³ÏóÎÄ¼ş) 
+#make zImage (arch/arm/bootç›®å½•ä¸‹ç”Ÿæˆlinuxå†…æ ¸æ˜ è±¡æ–‡ä»¶) 
  
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/*********************************************************************************************************/
 
  
-È±ÉÙ £¨build-essential£© ±àÒë¿âÒıÆğµÄ±àÒëÎÊÌâ¡£ 
+ç¼ºå°‘ ï¼ˆbuild-essentialï¼‰ ç¼–è¯‘åº“å¼•èµ·çš„ç¼–è¯‘é—®é¢˜ã€‚ 
  
 HOSTCC scripts/basic/fixdep 
 scripts/basic/fixdep.c:106:23: fatal error: sys/types.h: No such file or directory 
@@ -49,16 +48,16 @@ compilation terminated.
 make[1]: *** [scripts/basic/fixdep] Error 1 
 make: *** [scripts_basic] Error 2 
  
-½â¾ö·½·¨ÈçÏÂ£º 
+è§£å†³æ–¹æ³•å¦‚ä¸‹ï¼š 
 apt-get install build-essential  
  
-sudo apt-get install build-essential linux-headers-$(uname -r) °²Ñblinux drv é_°lÌ×¼ş 
+sudo apt-get install build-essential linux-headers-$(uname -r) å®‰è£linux drv é–‹ç™¼å¥—ä»¶ 
 
  
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/*********************************************************************************************************/
 
  
-±àÒëÄÚºË³öÏÖÒÔÏÂ´íÎó 
+ç¼–è¯‘å†…æ ¸å‡ºç°ä»¥ä¸‹é”™è¯¯ 
  
 Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at kernel/timeconst.pl line 373. 
  
@@ -70,47 +69,47 @@ Makefile:945: recipe for target 'kernel' failed
  
 make: *** [kernel] Error 2 
  
-½â¾ö°ì·¨£º 
-½«kernel/timeconst.plÖĞµÚ373ĞĞµÄdefined()È¥µôÖ»ÁôÏÂ@val¾Í¿ÉÒÔÁË 
+è§£å†³åŠæ³•ï¼š 
+å°†kernel/timeconst.plä¸­ç¬¬373è¡Œçš„defined()å»æ‰åªç•™ä¸‹@valå°±å¯ä»¥äº† 
  
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/*********************************************************************************************************/
 
  
-yaffs2 ÎÄ¼şÏµÍ³ ÒÆÖ²†–î} 
+yaffs2 æ–‡ä»¶ç³»ç»Ÿ ç§»æ¤å•é¡Œ 
 https://blog.csdn.net/baijinglei12/article/details/7686528 
  
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/*********************************************************************************************************/
 Error 1 Makefile:454: recipe for target 'menuconfig' failed make: *** [menuconfig] Error 2  
-½â¾ö°ì·¨£º 
+è§£å†³åŠæ³•ï¼š 
 sudo apt-get install libncurses5-dev 
  
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/*********************************************************************************************************/
  
-²é¿´rs232 port 
+æŸ¥çœ‹rs232 port 
 cmd:dmesg | grep tty 
  
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/*********************************************************************************************************/
  
-linux °´ minitool ›]·´‘ª 
-°²Ñb--> apt install libqtwebkit4 
+linux æŒ‰ minitool æ²’åæ‡‰ 
+å®‰è£--> apt install libqtwebkit4 
 
  
-///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-Ö´ĞĞmake menuconfig¿ÉÄÜ¿´ÈçÕâÑùµÄ´íÎó£º 
+/*********************************************************************************************************/
+æ‰§è¡Œmake menuconfigå¯èƒ½çœ‹å¦‚è¿™æ ·çš„é”™è¯¯ï¼š 
  
 *** Unable to find the ncurses libraries or the 
 *** required header files. 
-*** ¡®make menuconfig¡¯ requires the ncurses libraries. 
+*** â€˜make menuconfigâ€™ requires the ncurses libraries. 
 *** 
 *** Install ncurses (ncurses-devel) and try again. 
  
-½â¾ö°ì·¨ÈçÏÂ£º 
-CentOS£º 
+è§£å†³åŠæ³•å¦‚ä¸‹ï¼š 
+CentOSï¼š 
 yum install -y ncurses-devel 
  
-Ubuntu£º 
+Ubuntuï¼š 
 sudo apt-get install ncurses-dev 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 

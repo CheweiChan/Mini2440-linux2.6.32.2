@@ -9,7 +9,8 @@ tar xvzf arm-linux-gcc-4.5.1-v6-vfp-20120301.tgz -C /linux (-C /abc 解壓縮到
  
   
 3.修改环境变量，把交叉编译器的路径加入到PATH： 
-到opt/FriendlyARM/toolschain/4.5.1/bin 输入pwd命令，查看当前路径的绝对路径 
+到../opt/FriendlyARM/toolschain/4.5.1/bin 输入pwd命令，查看当前路径的绝对路径
+路徑為/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
 接下來輸入cmd增加路徑 
 export PATH=$PATH:/home/chewei/desktop_/opt/FriendlyARM/toolschain/4.4.3/bin 
  
@@ -26,11 +27,13 @@ source ~/.bashrc
 輸入cmd 確認編譯器: arm-linux-gcc hello.c -o hello(編譯hello.c檔) 
 輸入cmd 確認版本: arm-linux-readefl -a hello(查看編譯完後的hello檔) 
  
-#cp config_mini2440_P43 .config 
-#make mini2440_defconfig ;使用 Linux 官方自带的 mini2440 配置 
+#cp config_mini2440_P43 .config   //使用開發板代的example config
+#make mini2440_defconfig          //也可以使用 Linux 官方自带的 mini2440 配置 
 #make menuconfig 
 #make zImage (arch/arm/boot目录下生成linux内核映象文件) 
  
+ 
+可能遇到的問題:
 /*********************************************************************************************************/
 缺少 （build-essential） 编译库引起的编译问题。 
 HOSTCC scripts/basic/fixdep 

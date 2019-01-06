@@ -1,0 +1,19 @@
+/*增加hello_drive*/
+/home/chewei/desktop_/linux-2.6.32.2/drivers/char 目錄下
+1.增加 hello.c
+2.Kconfig 增加
+config Hello_word_MINI2440
+	tristate "test Support for Mini2440 hello"
+	depends on MACH_MINI2440
+	default y if MACH_MINI2440
+	help
+	  This option enables support for Hello word on Mini2440 boards.
+
+3.Makefile 增加obj-$(CONFIG_Hello_word_MINI2440) += hello.o
+----------------------------------------------------------------
+4.make menuconfig
+-->DeviceDrivers -->Character devices-->[＊]test Support for Mini2440 hello
+＊直接安裝進入default module
+M 生成module.ko 檔（可透過insmod安裝）
+
+5.make zImage  (make module)

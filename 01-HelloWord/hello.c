@@ -1,4 +1,4 @@
-hello.c
+/*hello.c*/
 #include <linux/kernel.h>
 #include <linux/module.h>
 static int __init mini2440_hello_module_init(void)

@@ -1,5 +1,5 @@
 /*增加hello_drive*/
-/home/chewei/desktop_/linux-2.6.32.2/drivers/char 目錄下
+../linux-2.6.32.2/drivers/char 目錄下
 1.增加 hello.c
 2.Kconfig 增加
 config Hello_word_MINI2440

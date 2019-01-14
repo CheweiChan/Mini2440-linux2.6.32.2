@@ -9,7 +9,7 @@ config LEDs_MINI2440
 	help
 	  This option enables support for LED on Mini2440 boards.
 
-3.Makefile 增加obj-$(CONFIG_Hello_word_MINI2440) += hello.o
+3.Makefile 增加obj-$(CONFIG_Hello_leds) += hello.o
 ----------------------------------------------------------------
 4.make menuconfig
 -->DeviceDrivers -->Character devices-->[＊]test Support for Mini2440 LED

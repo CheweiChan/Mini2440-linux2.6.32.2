@@ -45,14 +45,12 @@ static irqreturn_t buttons_interrupt(int irq, void *dev_id)
 {
     struct button_irq_desc *button_irqs = (struct button_irq_desc *)dev_id;
     int down;
-	printk("\nDEBUG=Buttons_interrupt\n");
-    // udelay(0);
+    printk("\nDEBUG=Buttons_interrupt\n");
     down = !s3c2410_gpio_getpin(button_irqs->pin);
 
-    if (down != (key_values[button_irqs->number] & 1)) { // Changed
-
-	key_values[button_irqs->number] = '0' + down;
-	
+    if (down != (key_values[button_irqs->number] & 1)) // up/down change
+    { 
+	key_values[button_irqs->number] = '0' + down;	
         ev_press = 1;
 	printk("\nDEBUG=wakeup\n");
         wake_up_interruptible(&button_waitq);
@@ -67,22 +65,22 @@ static int s3c24xx_buttons_open(struct inode *inode, struct file *file)
     int i;
     int err = 0;
     printk("\nDEBUG=Buttons_OPEN\n");
-    for (i = 0; i < sizeof(button_irqs)/sizeof(button_irqs[0]); i++) {
-	if (button_irqs[i].irq < 0) {
-		continue;
-	}
+    for (i = 0; i < sizeof(button_irqs)/sizeof(button_irqs[0]); i++) 
+    {
+	if (button_irqs[i].irq < 0) continue;
+
         err = request_irq(button_irqs[i].irq, buttons_interrupt, IRQ_TYPE_EDGE_BOTH, 
                           button_irqs[i].name, (void *)&button_irqs[i]);
-        if (err)
-            break;
+        if (err) break;
     }
 
-    if (err) {
+    if (err) 
+    {
         i--;
-        for (; i >= 0; i--) {
-	    if (button_irqs[i].irq < 0) {
-		continue;
-	    }
+        for (; i >= 0; i--) 
+	{
+	    if (button_irqs[i].irq < 0) continue;
+	  
 	    disable_irq(button_irqs[i].irq);
             free_irq(button_irqs[i].irq, (void *)&button_irqs[i]);
         }
@@ -99,10 +97,10 @@ static int s3c24xx_buttons_close(struct inode *inode, struct file *file)
 {
     int i;
     printk("\nDEBUG=Buttons_CLOSE\n");
-    for (i = 0; i < sizeof(button_irqs)/sizeof(button_irqs[0]); i++) {
-	if (button_irqs[i].irq < 0) {
-	    continue;
-	}
+    for (i = 0; i < sizeof(button_irqs)/sizeof(button_irqs[0]); i++) 
+    {
+	if (button_irqs[i].irq < 0) continue;
+	    
 	free_irq(button_irqs[i].irq, (void *)&button_irqs[i]);
     }
 
@@ -113,13 +111,13 @@ static int s3c24xx_buttons_close(struct inode *inode, struct file *file)
 static int s3c24xx_buttons_read(struct file *filp, char __user *buff, size_t count, loff_t *offp)
 {
     unsigned long err;
-	printk("\nDEBUG=Buttons_READ %d\n",ev_press);
-    if (!ev_press) {
-	if (filp->f_flags & O_NONBLOCK)
-	    return -EAGAIN;
-	else
-	printk("\nDEBUG=wait_in");
-	    wait_event_interruptible(button_waitq, ev_press);
+    printk("\nDEBUG=Buttons_READ %d\n",ev_press);
+    if (!ev_press) 
+    {
+	if (filp->f_flags & O_NONBLOCK) return -EAGAIN;
+	else printk("\nDEBUG=wait_in");
+	    
+	wait_event_interruptible(button_waitq, ev_press);
     }
     printk("\nDEBUG=wait_out");
     ev_press = 0;
@@ -129,13 +127,14 @@ static int s3c24xx_buttons_read(struct file *filp, char __user *buff, size_t cou
     return err ? -EFAULT : min(sizeof(key_values), count);
 }
 
+//procee調用select會呼叫此function
 static unsigned int s3c24xx_buttons_poll( struct file *file, struct poll_table_struct *wait)
 {
     unsigned int mask = 0;
-	printk("\nDEBUG=Buttons_POLL %d\n",ev_press);
+    printk("\nDEBUG=Buttons_POLL %d\n",ev_press);
     poll_wait(file, &button_waitq, wait);
-    if (ev_press)
-        mask |= POLLIN | POLLRDNORM;
+	
+    if (ev_press) mask |= POLLIN | POLLRDNORM;
     return mask;
 }
 

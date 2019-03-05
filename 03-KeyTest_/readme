@@ -1,1 +1,1 @@
-this module is read block,press key interrupt to wake up read process.
+this module is read block(wait_event_interruptible),press key interrupt to wake up read process.

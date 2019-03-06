@@ -1,1 +1,1 @@
-driver trigger signal and send to process by timer every 2s 
+module trigger signal and send to process by timer every 2s 

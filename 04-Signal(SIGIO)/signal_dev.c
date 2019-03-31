@@ -1,4 +1,5 @@
 #include<linux/module.h>
+#include<linux/miscdevice.h>
 #include<linux/types.h>
 #include<linux/fs.h>
 #include<linux/mm.h>
@@ -8,18 +9,19 @@
 #include<linux/poll.h>
 #include<linux/timer.h>
 #include<asm/io.h>
-#include<asm/system.h>
+//#include<asm/system.h>
 #include<asm/uaccess.h>
 #include<asm/atomic.h>
+#include <asm/unistd.h>
+#include <linux/slab.h>
 
 #define SYNC_MAJOR 200
-typedef struct 
+typedef struct sync_dev
 {
 struct cdev cdev;
 struct timer_list timer;
 struct fasync_struct *fasync_queue;
 }sync_dev;
-
 
 static int sync_major =SYNC_MAJOR;
 struct sync_dev *sync_devp;
@@ -45,7 +47,7 @@ static int sync_fasync(int fd,struct file *filp,int on)
 {
     int retval;
     struct sync_dev *dev = filp->private_data;
-
+    printk("fasync\n");
     retval = fasync_helper(fd,filp,on,&dev->fasync_queue);
 
     if(retval<0) 
@@ -70,16 +72,20 @@ static const struct file_operations sync_fops =
     .open = sync_open,
     .release = sync_release,
     .fasync = sync_fasync,
-}
+};
+
+static struct miscdevice misc = {
+	.minor = MISC_DYNAMIC_MINOR,
+	.name = "sync_123",
+	.fops = &sync_fops,
+};
 
 
-
-static int sync_init(void)
+static int __init syncint_init(void)
 {
     int result,err,i;
-
+#if 0
     dev_t devno =MKDEV(sync_major,0);
-
     result = register_chrdev_region(devno,1,"syncdev");
     if(result < 0)
         return result;
@@ -97,29 +103,38 @@ static int sync_init(void)
         printk("module add error\n");
         goto fail_malloc;
     }
+#endif
+    sync_devp = kmalloc(sizeof(struct sync_dev),GFP_KERNEL);
+    if(!sync_devp)
+        goto fail_malloc;
+
+	result =misc_register(&misc);
+
     init_timer(&sync_devp->timer);
     sync_devp->timer.expires = jiffies + HZ*2;
     sync_devp->timer.function = timer_function;
     add_timer(&sync_devp->timer);
-    return 0;
+    printk("\nsync_init");
+    return 0;   
 
     fail_malloc:
-        unregister_chrdev_region(devno,1);
+        //unregister_chrdev_region(devno,1);
         return result;
 }
 
-static void sync_exit(void)
+static void __exit sync_exit(void)
 {
-    cdev_del(sync_devp->cdev);
+    cdev_del(&sync_devp->cdev);
     kfree(sync_devp);
     del_timer(&sync_devp->timer);
     unregister_chrdev_region(MKDEV(sync_major,0),1);
+    printk("\nsync_close");
 }
 
 
 MODULE_LICENSE("GPL");
-MODULE_init(sync_init);
-MODULE_exit(sync_exit);
+module_init(syncint_init);
+module_exit(sync_exit);
 
 
 

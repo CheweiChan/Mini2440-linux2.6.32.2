@@ -25,9 +25,11 @@ int main(void)
     g_running=1;
     signal(SIGINT,stop_handler);
 
-    fd =open("/dev/syncdev",O_RDWR)
-    if(fd) printf("open ok \n");
-    else printf("open fail \n");
+    fd =open("/dev/sync_123",O_RDWR);
+    if(fd>0) 
+	printf("open ok \n");
+    else 
+	printf("open fail \n");
 
     signal(SIGIO,sync_handler);
     fcntl(fd,F_SETOWN,getpid());
@@ -35,6 +37,7 @@ int main(void)
     fcntl(fd,F_SETFL,oflags|FASYNC);
     while(g_running)
     {
+	printf("go\n");
         sleep(100);
     }
     

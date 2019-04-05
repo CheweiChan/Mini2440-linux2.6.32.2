@@ -25,7 +25,7 @@ int main(void)
     g_running=1;
     signal(SIGINT,stop_handler);
 
-    fd =open("/dev/sync_123",O_RDWR);
+    fd =open("/dev/signal_test",O_RDWR);
     if(fd>0) 
 	printf("open ok \n");
     else 

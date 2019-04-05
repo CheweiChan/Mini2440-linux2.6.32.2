@@ -37,10 +37,11 @@ void timer_function(unsigned long para)
 }
 
 
-int sync_open(struct inode *inode,struct file *filp)
+static int sync_open(struct inode *inode,struct file *filp)
 {
     filp->private_data = sync_devp;
     printk("open\n");
+    return 0;
 }
 
 static int sync_fasync(int fd,struct file *filp,int on)
@@ -76,39 +77,18 @@ static const struct file_operations sync_fops =
 
 static struct miscdevice misc = {
 	.minor = MISC_DYNAMIC_MINOR,
-	.name = "sync_123",
+	.name = "signal_test",
 	.fops = &sync_fops,
 };
 
 
 static int __init syncint_init(void)
 {
-    int result,err,i;
-#if 0
-    dev_t devno =MKDEV(sync_major,0);
-    result = register_chrdev_region(devno,1,"syncdev");
-    if(result < 0)
-        return result;
+    int result;
+    result =misc_register(&misc);
     sync_devp = kmalloc(sizeof(struct sync_dev),GFP_KERNEL);
     if(!sync_devp)
         goto fail_malloc;
-
-    memset(sync_devp,0,sizeof(struct sync_dev));
-    cdev_init(&sync_devp->cdev,&sync_fops);
-    sync_devp->cdev.owner = THIS_MODULE;
-    sync_devp->cdev.ops = &sync_fops;
-    err = cdev_add(&sync_devp->cdev,devno,1);
-    if(err)
-    {
-        printk("module add error\n");
-        goto fail_malloc;
-    }
-#endif
-    sync_devp = kmalloc(sizeof(struct sync_dev),GFP_KERNEL);
-    if(!sync_devp)
-        goto fail_malloc;
-
-	result =misc_register(&misc);
 
     init_timer(&sync_devp->timer);
     sync_devp->timer.expires = jiffies + HZ*2;
@@ -118,16 +98,16 @@ static int __init syncint_init(void)
     return 0;   
 
     fail_malloc:
-        //unregister_chrdev_region(devno,1);
+        misc_deregister(&misc);
         return result;
 }
 
 static void __exit sync_exit(void)
 {
-    cdev_del(&sync_devp->cdev);
+
     kfree(sync_devp);
     del_timer(&sync_devp->timer);
-    unregister_chrdev_region(MKDEV(sync_major,0),1);
+    misc_deregister(&misc);
     printk("\nsync_close");
 }
 

@@ -1,6 +1,6 @@
 CONFIG_MODULE_SIG=n
 
-obj-m := inputDeviceButton_drv.o
+obj-m := inputDeviceButton_module.o
 
 ifeq ($(KERNELDIR),)
 KERNELDIR=/lib/modules/$(shell uname -r)/build

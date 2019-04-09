@@ -116,31 +116,34 @@ static int __init button_init(void)
 {
     int error;
     struct input_dev *input_dev; 
-    printk("s3c2440 my_keyboard module start/n");     
+    printk("mini2440 inputdevice ket test module start/n");     
 
-     input_dev = input_allocate_device();  
-     if(!input_dev)  
-     {  
-      printk(KERN_ERR "Unable to allocate the input device!!/n");  
-      return -ENOMEM;  
-     }  
-     button_dev = input_dev;  
+    input_dev = input_allocate_device();  
+    if(!input_dev)  
+    {  
+     printk(KERN_ERR "Unable to allocate the input device!!/n");  
+     return -ENOMEM;  
+    }  
+    button_dev = input_dev;  
 
-     set_bit(EV_KEY, button_dev->evbit);
-     set_bit(KEY_ESC, button_dev->keybit);
-     set_bit(KEY_1, button_dev->keybit);
-     set_bit(KEY_2, button_dev->keybit);
-     set_bit(KEY_3, button_dev->keybit);
-     set_bit(KEY_4, button_dev->keybit);
-     set_bit(KEY_5, button_dev->keybit);
+    set_bit(EV_KEY, button_dev->evbit);
+    set_bit(KEY_ESC, button_dev->keybit);
+    set_bit(KEY_1, button_dev->keybit);
+    set_bit(KEY_2, button_dev->keybit);
+    set_bit(KEY_3, button_dev->keybit);
+    set_bit(KEY_4, button_dev->keybit);
+    set_bit(KEY_5, button_dev->keybit);
 
-     button_dev->name = "buttons_yzx";
+    button_dev->name = "inputDevice_button";
 
-     button_dev->dev.init_name = "input_yzx";
- 
+    button_dev->dev.init_name = "input_button";
+    button_dev->phys = "XY_button" ;
+	button_dev->uniq = "20170410" ; 
+    button_dev->id.vendor = "chewei" ;
+    button_dev->id.version = 0x01 ;
 
-     button_dev->open = button_open;
-     button_dev->close = button_close;
+    button_dev->open = button_open;
+    button_dev->close = button_close;
  
     printk("input device has allocated/n");
  
@@ -154,7 +157,7 @@ static int __init button_init(void)
          return error;
     }
  
-    printk("register device has success\n");
+    printk("register intput_device has success\n");
  
     return 0;
 }

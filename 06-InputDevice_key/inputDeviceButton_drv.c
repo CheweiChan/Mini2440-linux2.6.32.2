@@ -108,7 +108,7 @@ static irqreturn_t buttons_interrupt(int irq, void *dummy)
      input_report_key(button_dev, KEY_2, !s3c2410_gpio_getpin(S3C2410_GPG(5)));
      input_report_key(button_dev, KEY_3, !s3c2410_gpio_getpin(S3C2410_GPG(6)));
      input_report_key(button_dev, KEY_4, !s3c2410_gpio_getpin(S3C2410_GPG(7)));
-     input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG1(1)));
+     input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG(1)));
      input_sync(button_dev);
      return IRQ_HANDLED;
 }

@@ -14,7 +14,7 @@ int main(void)
     int fd;
     int key_value,i=0,count;
     struct input_event ev_key;
-    fd = open("/dev/event1", 666);//®Úcheck /sys/class/unput dir num
+    fd = open("/dev/event1", 666);//check device node use:cat /proc/bus/input/devices
     if (fd < 0) 
     {
         perror("open device buttons");
@@ -25,7 +25,7 @@ int main(void)
         count = read(fd,&ev_key,sizeof(struct input_event));
         for(i=0; i<(int)count/sizeof(struct input_event); i++)
         {
-		    if(EV_KEY==ev_key.type)
+            if(EV_KEY==ev_key.type)
             printf("type:%d,code:%d,value:%d\n", ev_key.type,ev_key.code,ev_key.value);
             if(EV_SYN==ev_key.type)
             printf("syn event\n\n");

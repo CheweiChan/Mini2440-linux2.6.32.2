@@ -9,7 +9,7 @@ KDIR := /home/parallels/Desktop/linux/linux-2.6.32.2/
 KERNEL =/home/parallels/Desktop/linux_friendlyArm/opt/FriendlyARM/toolschain/4.4.3/bin/arm-none-linux-gnueabi-gcc
 all:
 	make -C $(KDIR) M=$(PWD) modules 
-	$(KERNEL) -o button button_app.c
+	$(KERNEL) -o button_app button_app.c
 
 clean:
 	make -C $(KERNELDIR) M=$(PWD) clean

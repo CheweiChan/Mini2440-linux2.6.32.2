@@ -14,7 +14,7 @@ int main(void)
     int fd;
     int key_value,i=0,count;
     struct input_event ev_key;
-    fd = open("/dev/event1", 666);//check device node use:cat /proc/bus/input/devices
+    fd = open("/dev/input/event1", 666);//check device node use:cat /proc/bus/input/devices
     if (fd < 0) 
     {
         perror("open device buttons");

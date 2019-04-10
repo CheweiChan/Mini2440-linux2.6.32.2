@@ -21,6 +21,7 @@
 #include <linux/device.h>
 #include <linux/gpio.h>
 static struct input_dev *button_dev;
+static struct timer_list timer;
 static irqreturn_t buttons_interrupt(int irq, void *dummy);
 static int button_open(struct input_dev *dev);
 static void button_close(struct input_dev *dev);
@@ -40,6 +41,17 @@ static struct button_irq_desc button_irqs [] = {
     {IRQ_EINT15, S3C2410_GPG(7) ,  S3C2410_GPG7_EINT15 , 5, "KEY5"},
     {IRQ_EINT19, S3C2410_GPG(11),  S3C2410_GPG11_EINT19, 6, "KEY6"},
 };
+static void button_timer_function(unsigned long data)
+{
+     input_report_key(button_dev, KEY_0, !s3c2410_gpio_getpin(S3C2410_GPG(0)));
+     input_report_key(button_dev, KEY_1, !s3c2410_gpio_getpin(S3C2410_GPG(3)));
+     input_report_key(button_dev, KEY_2, !s3c2410_gpio_getpin(S3C2410_GPG(5)));
+     input_report_key(button_dev, KEY_3, !s3c2410_gpio_getpin(S3C2410_GPG(6)));
+     input_report_key(button_dev, KEY_4, !s3c2410_gpio_getpin(S3C2410_GPG(7)));
+     input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG(11)));
+     input_sync(button_dev);
+     printk("\ntimer");
+}
 
 static int button_open(struct input_dev *dev)
 {
@@ -78,6 +90,7 @@ static int button_open(struct input_dev *dev)
          }
             return -EBUSY;
     }
+    setup_timer(&timer,button_timer_function,0);
         return 0;
 }
 
@@ -97,18 +110,12 @@ static void button_close(struct input_dev *dev)
         disable_irq(button_irqs[i].irq);
         free_irq(button_irqs[i].irq, (void *)&button_irqs[i]);
     }
+    del_timer(&timer);
 }
 
 static irqreturn_t buttons_interrupt(int irq, void *dummy)
 {
-
-     input_report_key(button_dev, KEY_1, !s3c2410_gpio_getpin(S3C2410_GPG(0)));
-     input_report_key(button_dev, KEY_2, !s3c2410_gpio_getpin(S3C2410_GPG(3)));
-     input_report_key(button_dev, KEY_3, !s3c2410_gpio_getpin(S3C2410_GPG(5)));
-     input_report_key(button_dev, KEY_4, !s3c2410_gpio_getpin(S3C2410_GPG(6)));
-     input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG(7)));
-     input_report_key(button_dev, KEY_6, !s3c2410_gpio_getpin(S3C2410_GPG(11)));
-     input_sync(button_dev);
+     mod_timer(&timer,jiffies + (HZ/100));//debounce
      return IRQ_HANDLED;
 }
 static int __init button_init(void)

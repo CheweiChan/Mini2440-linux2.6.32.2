@@ -22,7 +22,7 @@ int main(void)
     }
     while(1)
     {
-        count = read(fd,&ev_key,sizeof(struct input_event));
+        count = read(fd,&ev_key,sizeof(struct input_event)); //block (wait input_event)
         if(EV_KEY==ev_key.type)
             printf("type:%d,code:%d,value:%d\n", ev_key.type,ev_key.code,ev_key.value);
         if(EV_SYN==ev_key.type)

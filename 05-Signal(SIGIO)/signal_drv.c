@@ -89,7 +89,7 @@ static int __init syncint_init(void)
     sync_devp = kmalloc(sizeof(struct sync_dev),GFP_KERNEL);
     if(!sync_devp)
         goto fail_malloc;
-
+    memset(sync_devp, 0, sizeof(struct sync_dev));
     init_timer(&sync_devp->timer);
     sync_devp->timer.expires = jiffies + HZ*2;
     sync_devp->timer.function = timer_function;

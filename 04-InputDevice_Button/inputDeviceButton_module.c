@@ -45,8 +45,7 @@ static int button_open(struct input_dev *dev)
 {
     int i;
     int err = 0;
-    
-
+   
     set_irq_type(IRQ_EINT8, IRQ_TYPE_EDGE_BOTH);  
     set_irq_type(IRQ_EINT11, IRQ_TYPE_EDGE_BOTH);  
     set_irq_type(IRQ_EINT13, IRQ_TYPE_EDGE_BOTH);  
@@ -72,7 +71,7 @@ static int button_open(struct input_dev *dev)
          {
              if (button_irqs[i].irq < 0) 
              {
-                continue;
+                 continue;
              }
              disable_irq(button_irqs[i].irq);
              free_irq(button_irqs[i].irq, (void *)&button_irqs[i]);
@@ -103,12 +102,12 @@ static void button_close(struct input_dev *dev)
 static irqreturn_t buttons_interrupt(int irq, void *dummy)
 {
 
-     input_report_key(button_dev, KEY_ESC, !s3c2410_gpio_getpin(S3C2410_GPG(0)));
-     input_report_key(button_dev, KEY_1, !s3c2410_gpio_getpin(S3C2410_GPG(3)));
-     input_report_key(button_dev, KEY_2, !s3c2410_gpio_getpin(S3C2410_GPG(5)));
-     input_report_key(button_dev, KEY_3, !s3c2410_gpio_getpin(S3C2410_GPG(6)));
-     input_report_key(button_dev, KEY_4, !s3c2410_gpio_getpin(S3C2410_GPG(7)));
-     input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG(1)));
+     input_report_key(button_dev, KEY_1, !s3c2410_gpio_getpin(S3C2410_GPG(0)));
+     input_report_key(button_dev, KEY_2, !s3c2410_gpio_getpin(S3C2410_GPG(3)));
+     input_report_key(button_dev, KEY_3, !s3c2410_gpio_getpin(S3C2410_GPG(5)));
+     input_report_key(button_dev, KEY_4, !s3c2410_gpio_getpin(S3C2410_GPG(6)));
+     input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG(7)));
+     input_report_key(button_dev, KEY_6, !s3c2410_gpio_getpin(S3C2410_GPG(11)));
      input_sync(button_dev);
      return IRQ_HANDLED;
 }
@@ -121,25 +120,24 @@ static int __init button_init(void)
     input_dev = input_allocate_device();  
     if(!input_dev)  
     {  
-     printk(KERN_ERR "Unable to allocate the input device!!/n");  
-     return -ENOMEM;  
+     	printk(KERN_ERR "Unable to allocate the input device!!/n");  
+     	return -ENOMEM;  
     }  
     button_dev = input_dev;  
 
     set_bit(EV_KEY, button_dev->evbit);
-    set_bit(KEY_ESC, button_dev->keybit);
     set_bit(KEY_1, button_dev->keybit);
     set_bit(KEY_2, button_dev->keybit);
     set_bit(KEY_3, button_dev->keybit);
     set_bit(KEY_4, button_dev->keybit);
     set_bit(KEY_5, button_dev->keybit);
+    set_bit(KEY_6, button_dev->keybit);
 
     button_dev->name = "inputDevice_button";
 
     button_dev->dev.init_name = "input_button";
     button_dev->phys = "XY_button" ;
-	button_dev->uniq = "20170410" ; 
-    button_dev->id.vendor = "chewei" ;
+    button_dev->uniq = "20170410" ; 
     button_dev->id.version = 0x01 ;
 
     button_dev->open = button_open;
@@ -163,7 +161,6 @@ static int __init button_init(void)
 }
 static void __exit button_exit(void)
 {
-
     input_unregister_device(button_dev); 
 }
 module_init(button_init);

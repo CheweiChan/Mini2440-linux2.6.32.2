@@ -9,6 +9,11 @@
 #include <sys/time.h>
 #include <errno.h>
 #include <linux/input.h>
+/*
+ev_key.code = KEY_1~KEY_6(1~6);
+ev_key.type = EV_KEY
+ev_key.value = up or down (0 or 1)
+*/
 int main(void)
 {
     int fd;

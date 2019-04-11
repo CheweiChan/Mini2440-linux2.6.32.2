@@ -55,18 +55,18 @@ static void touch_timer_fire(unsigned long data)
 
  	updown = (!(data0 & S3C2410_ADCDAT0_UPDOWN)) && (!(data1 & S3C2410_ADCDAT0_UPDOWN));
 
- 	if (updown) 
- 	{// down event
- 		if (count != 0) 
- 		{//accumulate 4 times
+ 	if (updown)// down event 
+ 	{
+ 		if (count != 0)//accumulate 4 times 
+ 		{
 			long tmp;
                                                                                                  
 			tmp = xp;
 			xp = yp;
 			yp = tmp;
                                                                                                  
-            xp >>= 2;
-            yp >>= 2;
+                        xp >>= 2;
+                        yp >>= 2;
 
  			input_report_abs(dev, ABS_X, xp);
  			input_report_abs(dev, ABS_Y, yp);
@@ -79,18 +79,18 @@ static void touch_timer_fire(unsigned long data)
  		xp = 0;
  		yp = 0;
  		count = 0;
-        /*change to ADC mode and start up ADC transfer*/
+                /*change to ADC mode and start up ADC transfer*/
  		iowrite32(S3C2410_ADCTSC_PULL_UP_DISABLE | AUTOPST, base_addr+S3C2410_ADCTSC);
  		iowrite32(ioread32(base_addr+S3C2410_ADCCON) | S3C2410_ADCCON_ENABLE_START, base_addr+S3C2410_ADCCON);
  	} 
- 	else
- 	{// up event
+ 	else// up event
+ 	{
  		count = 0;
 
  		input_report_key(dev, BTN_TOUCH, 0);
  		input_report_abs(dev, ABS_PRESSURE, 0);
  		input_sync(dev);
-        /*change mode to wait touch event*/
+                /*change mode to wait touch event*/
  		iowrite32(WAIT4INT(0), base_addr+S3C2410_ADCTSC);
 		if (OwnADC)
 		{
@@ -110,8 +110,8 @@ static irqreturn_t stylus_updown(int irq, void *dev_id)
 	unsigned long data1;
 	int updown;
 
-	if (down_trylock(&ADC_LOCK) == 0) 
-	{//check ADC right to use and luck adc
+	if (down_trylock(&ADC_LOCK) == 0)//check ADC right to use and luck adc 
+	{
 		OwnADC = 1;
 		data0 = ioread32(base_addr+S3C2410_ADCDAT0);
 		data1 = ioread32(base_addr+S3C2410_ADCDAT1);
@@ -122,8 +122,8 @@ static irqreturn_t stylus_updown(int irq, void *dev_id)
 		{
 			touch_timer_fire(0);
 		}
-		else 
-		{//touch up very quick
+		else//touch up very quick
+		{
 			OwnADC = 0;
 			up(&ADC_LOCK);//unlock ADC
 		}
@@ -230,7 +230,7 @@ static int __init s3c2410ts_init(void)
 
 	printk(KERN_INFO "%s successfully loaded\n", s3c2410ts_name);
 
-	/* All went ok, so register to the input system */
+	/* register to the input system */
 	input_register_device(dev);
 
 	return 0;

@@ -15,15 +15,13 @@
 #include <asm/unistd.h>
 #include <linux/slab.h>
 
-#define SYNC_MAJOR 200
-typedef struct sync_dev
+struct sync_dev
 {
 struct cdev cdev;
 struct timer_list timer;
 struct fasync_struct *fasync_queue;
-}sync_dev;
+};
 
-static int sync_major =SYNC_MAJOR;
 struct sync_dev *sync_devp;
 
 void timer_function(unsigned long para)
@@ -61,7 +59,6 @@ static int sync_fasync(int fd,struct file *filp,int on)
 int sync_release(struct inode *inode,struct file *filp)
 {
     struct sync_dev *dev = filp->private_data;
-    unregister_chrdev_region(MKDEV(sync_major,0),1);
     sync_fasync(-1,filp,0);
     return 0;
 }
@@ -89,7 +86,7 @@ static int __init syncint_init(void)
     sync_devp = kmalloc(sizeof(struct sync_dev),GFP_KERNEL);
     if(!sync_devp)
         goto fail_malloc;
-    memset(sync_devp, 0, sizeof(struct sync_dev));
+    memset(sync_devp, 0, sizeof(struct sync_dev));//need to initial
     init_timer(&sync_devp->timer);
     sync_devp->timer.expires = jiffies + HZ*2;
     sync_devp->timer.function = timer_function;
@@ -104,7 +101,6 @@ static int __init syncint_init(void)
 
 static void __exit sync_exit(void)
 {
-
     kfree(sync_devp);
     del_timer(&sync_devp->timer);
     misc_deregister(&misc);

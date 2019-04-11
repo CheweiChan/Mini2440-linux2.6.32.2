@@ -1,13 +1,13 @@
 step 1:
 	initial GPIO/Input device/ISR,there are two mode of touch interrupt as follows:
 	(a)touch mode ->touch event up or dowm interrupt 
-	(b)ADC mode ->ADC transform  done event interrupt
+	(b)ADC converted mode ->ADC transform  done event interrupt
 	
 step 2:
-	when touch event,into up_down ISR,change mode to ADC mode
+	when a touch event occurs,into up_down ISR,change mode to ADC converted mode and start ADC conversion
 	
 step 3:
-	when ADC transform done,into ADC transform done ISR
+	when ADC conversion done,into ADC conversion done ISR
 	get ADC data,continue to start the ADC if the number of conversions is less than 4
 
 step 4:

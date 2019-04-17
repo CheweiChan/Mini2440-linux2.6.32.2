@@ -12,12 +12,12 @@
 */
 int main(int argc,char **argv)
 {
-    int fd,i;
+    int fd,i=0;
     char register_addr = 0;//start address
-    char wbuf[2];//command buffer
+    char wbuf[2]={0};//command buffer
     char *p_buf;
-    char RX_buffer[256]={0};
-    char TX_buffer[256]={0};
+    char Rx_buffer[256]={0};
+    char Tx_buffer[256]={0};
     fd = open("/dev/at24c08", O_RDWR);
     if (fd < 0)
     {
@@ -26,27 +26,25 @@ int main(int argc,char **argv)
     }
     if(strcmp(argv[1],"w") == 0)
     {   
-        RX_buffer[0]=atoi(argv[2]);// read address
+        Rx_buffer[0]=atoi(argv[2]);// idx 0= write start address
         p_buf=argv[3];
         while(p_buf[i] != '\0')
         {
-        	RX_buffer[i+1]=p_buf[i]-'0';
-        i++;
-    }
-    write(fd, &RX_buffer[0], i+1);
+        	Rx_buffer[i+1]=p_buf[i++]-'0';
+        }
+        write(fd, &Rx_buffer[0], i+1);
     }
     else
     {	
         register_addr =atoi(argv[2]);
-        wbuf[1] = atoi(argv[3]);//len
-        write(fd, &register_addr, 1);
-        read(fd, &TX_buffer[0], wbuf[1]);
-        i=0;
+        wbuf[1] = atoi(argv[3]);//read len
+        write(fd, &register_addr, 1);//write start address
+        read(fd, &Tx_buffer[0], wbuf[1]);
         while(i<wbuf[1])
-        	printf("%d ",TX_buffer[i++]);
+        	printf("%d ",Tx_buffer[i++]);
+        printf("\n");
     }
-    printf("\n");
-
+    close(fd);
     return 0;
 }
 

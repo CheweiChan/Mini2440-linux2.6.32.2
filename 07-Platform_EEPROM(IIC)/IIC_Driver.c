@@ -58,7 +58,7 @@ static int i2c_write_byte(char *buf,int count)
 }
 static int e2prom_open(struct inode *inode, struct file *file)
 {
-return 0;
+    return 0;
 }
 static ssize_t e2prom_read(struct file *filep, char *buf, size_t size,loff_t *ppos)
 {
@@ -118,10 +118,10 @@ static ssize_t e2prom_write(struct file *filep, const char *buf, size_t size,lof
 		return ret;
 }
 struct file_operations e2prom_fops = {
-.owner=THIS_MODULE,
-.open=e2prom_open,
-.read=e2prom_read,
-.write=e2prom_write,
+	.owner=THIS_MODULE,
+	.open=e2prom_open,
+	.read=e2prom_read,
+	.write=e2prom_write,
 };
 static int e2prom_probe(struct i2c_client *client,const struct i2c_device_id *id)
 {
@@ -175,14 +175,14 @@ static int e2prom_remove(struct i2c_client *client)
 }
 /*struct i2c_driver*/
 static struct i2c_driver e2prom_driver={
-	.probe		= e2prom_probe,
-	.remove		= __devexit_p(e2prom_remove),
-    .id_table   = e2prom_table,//Record which devices this driver serves
+	.probe	    = e2prom_probe,
+	.remove	    = __devexit_p(e2prom_remove),
+        .id_table   = e2prom_table,//Record which devices this driver serves
 	.driver     =
-    {
-     .name	="at24c08b",
-     .owner =THIS_MODULE,
-	},
+        {
+         .name	="at24c08b",
+         .owner =THIS_MODULE,
+        },
 };
 static int __init e2prom_init(void)
 {

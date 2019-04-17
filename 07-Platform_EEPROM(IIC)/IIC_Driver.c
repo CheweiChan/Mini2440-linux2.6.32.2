@@ -98,7 +98,7 @@ static ssize_t e2prom_write(struct file *filep, const char *buf, size_t size,lof
 		return -ENOMEM;
 		goto err0;
 	}
-ret = copy_from_user(tmp,buf,size);
+    ret = copy_from_user(tmp,buf,size);
 	if(ret){
 		printk("copy data failed!\n");
 		ret =-EFAULT;
@@ -132,6 +132,7 @@ static int e2prom_probe(struct i2c_client *client,const struct i2c_device_id *id
 		printk("malloc failed\n");
 		return -ENOMEM;
 	}
+	memset(e2prom_dev,0,sizeof(struct e2prom_device));
 	e2prom_dev->at24c02_client = client;
 	/*create char device that provide user file operate interface*/
 	ret = register_chrdev(E2PROM_MAJOR,"e2prom_module",&e2prom_fops);

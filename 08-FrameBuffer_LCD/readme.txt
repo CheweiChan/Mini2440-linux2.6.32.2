@@ -1,9 +1,14 @@
-fbmem/s3c2410fb --->\linux-2.6.29\drivers\video
-devs -->\linux-2.6.29\linux-2.6.29\arch\arm\plat-s3c24xx
+fbmem  (path:\linux-2.6.29\drivers\video)
+s3c2410fb  (path:\linux-2.6.29\drivers\video)
+devs (path:\linux-2.6.29\linux-2.6.29\arch\arm\plat-s3c24xx)
+
+platform_device s3c_device_lcd 定義在devs裡面然後mach-smdk2440.c裡面會創建platform_Lcd_device
+fbmem.c在模塊加載的時候會呼叫fbmem_init註冊一個chrdev(FB_MAJOR)包含了userspace所會呼叫到的fb_fops
+s3c2410fb為lcd驅動,裡面包含了register_framebuffer(函數在fbmem.c裡),此函數會呼叫device_create創建chrdev(FB_MAJOR)的操作節點
 
 
-platform_device *smdk2440_devices[] add (&s3c_device_lcd)-->C:\linux-2.6.29\arch\arm\mach-s3c2440\mach-smdk2440.c
-
+C:\linux-2.6.29\arch\arm\mach-s3c2440\mach-smdk2440.c 增加:
+platform_device *smdk2440_devices[] add (&s3c_device_lcd)
 /* LCD driver info */
 
 static struct s3c2410fb_display smdk2440_lcd_cfg __initdata = {

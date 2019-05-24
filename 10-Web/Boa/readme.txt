@@ -4,6 +4,7 @@
 按下按鈕login後由login.cgi處理後再顯示網頁
 
 
+下载 boa-0.94.13.tar.gz ,下载地址: http://www.boa.org/
 修改boa-0.94.13文件夹下的boa.conf，放入開發板etc/boa（此目录在src下difines.h文件中指定#define SERVER_ROOT "/etc/boa"）
 Port 80
 User 默认nobody，改为root

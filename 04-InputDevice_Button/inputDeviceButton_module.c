@@ -70,7 +70,7 @@ static int button_open(struct input_dev *dev)
         if (button_irqs[i].irq < 0) 
             continue; 
 
-        //if share irq,trigger mode must same
+        //If set to IRQF_SHARED mode, the trigger mode of other module must be the same.
         err = request_irq(button_irqs[i].irq, buttons_interrupt, IRQF_SAMPLE_RANDOM, 
                           button_irqs[i].name, (void *)&button_irqs[i]);
         if (err)

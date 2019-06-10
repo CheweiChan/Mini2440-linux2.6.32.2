@@ -42,14 +42,14 @@ static struct button_irq_desc button_irqs [] = {
     {IRQ_EINT19, S3C2410_GPG(11),  S3C2410_GPG11_EINT19, 6, "KEY6"},
 };
 static void button_timer_function(unsigned long data)
-{
+{    //If the status is not changed, the button_dev will not be updated.
      input_report_key(button_dev, KEY_0, !s3c2410_gpio_getpin(S3C2410_GPG(0)));
      input_report_key(button_dev, KEY_1, !s3c2410_gpio_getpin(S3C2410_GPG(3)));
      input_report_key(button_dev, KEY_2, !s3c2410_gpio_getpin(S3C2410_GPG(5)));
      input_report_key(button_dev, KEY_3, !s3c2410_gpio_getpin(S3C2410_GPG(6)));
      input_report_key(button_dev, KEY_4, !s3c2410_gpio_getpin(S3C2410_GPG(7)));
      input_report_key(button_dev, KEY_5, !s3c2410_gpio_getpin(S3C2410_GPG(11)));
-     input_sync(button_dev);
+     input_sync(button_dev);//report event(button_dev) to user space
      printk("\ntimer");
 }
 
@@ -70,6 +70,7 @@ static int button_open(struct input_dev *dev)
         if (button_irqs[i].irq < 0) 
             continue; 
 
+        //if share irq,trigger mode must same
         err = request_irq(button_irqs[i].irq, buttons_interrupt, IRQF_SAMPLE_RANDOM, 
                           button_irqs[i].name, (void *)&button_irqs[i]);
         if (err)

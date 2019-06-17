@@ -148,5 +148,4 @@ static void __exit dev_exit(void)
 module_init(dev_init);
 module_exit(dev_exit);
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("FriendlyARM Inc.");
 MODULE_DESCRIPTION("S3C2410/S3C2440 PWM Driver");

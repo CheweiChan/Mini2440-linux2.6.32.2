@@ -194,5 +194,4 @@ EXPORT_SYMBOL(ADC_LOCK);
 module_init(dev_init);
 module_exit(dev_exit);
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("FriendlyARM Inc.");
 

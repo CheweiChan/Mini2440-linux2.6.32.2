@@ -20,8 +20,10 @@
 #include <linux/cdev.h>
 #include <linux/miscdevice.h>
 
-#include "s3c24xx-adc.h"
+#define ADC_WRITE(ch, prescale)	((ch)<<16|(prescale))
 
+#define ADC_WRITE_GETCH(data)	(((data)>>16)&0x7)
+#define ADC_WRITE_GETPRE(data)	((data)&0xff)
 #undef DEBUG
 //#define DEBUG
 #ifdef DEBUG

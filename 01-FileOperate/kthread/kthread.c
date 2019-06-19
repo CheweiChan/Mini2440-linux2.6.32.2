@@ -12,15 +12,9 @@
 
 void toSleepMilliSec(int msec)
 {
-
-long timeout =(msec)*HZ/1000;
-
-while(timeout>0)
-{
-
-timeout = schedule_timeout(timeout);
-}
-
+    long timeout =(msec)*HZ/1000;
+    while(timeout>0)
+        timeout = schedule_timeout(timeout);
 }
 
 char w_databuffer[20]="abcdefghijklmn";

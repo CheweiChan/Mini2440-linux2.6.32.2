@@ -29,10 +29,8 @@ static int fileThread(void *data)
     mm_segment_t old_fs=get_fs();
     loff_t posWrite,posRead;
     count=0;
-
-
+	
     filp = filp_open("/home/testfile",O_RDWR|O_CREAT,777);
-
     if(IS_ERR(filp))
     {
         printk("can't open file");
@@ -45,21 +43,21 @@ static int fileThread(void *data)
     while(!(kthread_should_stop()))
     {
         toSleepMilliSec(100);
-		count++;
+	count++;
 	if(count<10)
 	{
-		vfs_write(filp,(char *)w_databuffer,12,&posWrite);
-		vfs_read(filp,(char *)r_databuffer,12,&posRead);
-		printk("read[%d]=%s\n",(int)posRead,r_databuffer);
+	    vfs_write(filp,(char *)w_databuffer,12,&posWrite);
+	    vfs_read(filp,(char *)r_databuffer,12,&posRead);
+	    printk("read[%d]=%s\n",(int)posRead,r_databuffer);
 	}
 	else if(count == 10)
 	{ 
-		filp_close(filp,0);
-		set_fs(old_fs);
+	    filp_close(filp,0);
+	    set_fs(old_fs);
 	}
 	else
 	{
-		continue;
+	    continue;
 	}
      }
 
@@ -76,8 +74,8 @@ static  void __exit kfile_cleanup(void)
 {
 	if(kfileThread)
 	{
-		printk("stop filethread \n");
-		kthread_stop(kfileThread);
+	    printk("stop filethread \n");
+	    kthread_stop(kfileThread);
 	}
 }
 

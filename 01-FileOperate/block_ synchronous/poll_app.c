@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/type.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/select.h>
@@ -11,36 +10,30 @@
 
 int main(void)
 {
-    int fd1,fd2,maxfdp,ret;
+    int fd1,ret;
     fd_set fds;
-    struct timespec tv;
-    char buf[MEMDEV_SIZE];
+    struct timespec timeout;
+    fd1=open("/dev/polldev",O_RDWR);
     FD_ZERO(&fds);
-
     FD_SET(fd1,&fds);
-    tv.tv_sec=0;
-    tv.tv_nsec=0;
+    timeout.tv_sec=5;
+    timeout.tv_nsec=0;
     printf("\ntest for select");
 
     while(1)
     {
-
-    ret = select(fd1+1,&fds,NULL,NULL,NULL);
-     if(ret == -1)
-        printf("\nselect error");
-     else if(ret == 0)
-        printf("\n time out");
-     else
-     {
-        FD_ZERO(&fds);
-        FD_SET(fd1,&fds);
-     }
-
-
-
+    	printf("\nselect");
+	ret = select(fd1+1,&fds,NULL,NULL,&timeout);
+    	if(ret == -1)
+            printf("\nselect error");
+    	else if(ret == 0)
+            printf("\n time out");
+    	else
+    	{
+       	    FD_ZERO(&fds);
+            FD_SET(fd1,&fds);
+    	}
     }
-
-
 }
 
 

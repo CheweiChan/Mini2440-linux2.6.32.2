@@ -10,39 +10,27 @@
 #include <linux/interrupt.h>
 #include <linux/kthread.h>
 
-#define OK 1
-#define FALSE 0
-
 void toSleepMilliSec(int msec)
-{
-long timeout =(msec)*HZ/1000;
-
-while(timeout>0)
 {
-
-timeout = schedule_timeout(timeout);
+    long timeout =(msec)*HZ/1000;
+    while(timeout>0)
+        timeout = schedule_timeout(timeout);
 }
 
-}
-
-int w_databuffer[100];
-int r_databuffer[100]={0};
+char w_databuffer[20]="abcdefghijklmn";
+char r_databuffer[12];
 
 static struct task_struct *kfileThread = NULL;
-struct file *file = NULL;
+struct file *filp = NULL;
 
 static int fileThread(void *data)
 {
-    int cmd,count,i;
-    mm_srgment_t old_fa=get_fs();
+    int count;
+    mm_segment_t old_fs=get_fs();
     loff_t posWrite,posRead;
     count=0;
-    w_databuffer[0]=0x12345678;
-    w_databuffer[1]=0xaaaaaaaa;
-    w_databuffer[2]=0x55555555;
-
+	
     filp = filp_open("/home/testfile",O_RDWR|O_CREAT,777);
-
     if(IS_ERR(filp))
     {
         printk("can't open file");
@@ -50,46 +38,50 @@ static int fileThread(void *data)
     }
     set_fs(KERNEL_DS);
     posWrite=0;
-    podRead=0;
+    posRead=0;
 
     while(!(kthread_should_stop()))
     {
         toSleepMilliSec(100);
-        vfs_write(filp,(char *)w_databuffer,12,&posWrite);
-        vfs_read(filp,(char *)r_databuffer,6,&posRead);
-        for(i=0;i<10;i++)
-            printk("read[%d],%x",posRead,r_databuffer[i]);
-        vfs_read(filp,(char *)r_databuffer,6,&posRead);
-        for(i=0;i<10;i++)
-            printk("read[%d],%x",posRead,r_databuffer[i]);
+	count++;
+	if(count<10)
+	{
+	    vfs_write(filp,(char *)w_databuffer,12,&posWrite);
+	    vfs_read(filp,(char *)r_databuffer,12,&posRead);
+	    printk("read[%d]=%s\n",(int)posRead,r_databuffer);
+	}
+	else if(count == 10)
+	{ 
+	    filp_close(filp,0);
+	    set_fs(old_fs);
+	}
+	else
+	{
+	    continue;
+	}
+     }
 
-        filp_close(filp,0);
-        set_fs(old_fs);
-
-    }
 }
 
-static int kfile_init(void)
+static int __init kfile_init(void)
 {
     kfileThread = kthread_run(fileThread,"test","filethradf");
+    printk("initthread=%x\n",kfileThread);
     return 0;
 }
 
-static void kfile_cleanup(void)
+static  void __exit kfile_cleanup(void)
 {
-if(kfileThread)
-{
-printf("stop filethread \n");
-kthread_stop(kfileThread);
-
+	if(kfileThread)
+	{
+	    printk("stop filethread \n");
+	    kthread_stop(kfileThread);
+	}
 }
 
 module_init(kfile_init);
 module_exit(kfile_cleanup);
-
-}
-
-
+MODULE_LICENSE("GPL");
 
 
 

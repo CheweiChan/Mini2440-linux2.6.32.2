@@ -11,7 +11,7 @@ devs       (path:\linux-2.6.29\linux-2.6.29\arch\arm\plat-s3c24xx)
 
 C:\linux-2.6.29\arch\arm\mach-s3c2440\mach-smdk2440.c 增加:
 platform_device *smdk2440_devices[] add (&s3c_device_lcd)
-
+```c
 /* LCD driver info */
 static struct s3c2410fb_display smdk2440_lcd_cfg __initdata = {
 
@@ -83,3 +83,4 @@ static void __init smdk2440_machine_init(void)
 	platform_add_devices(smdk2440_devices, ARRAY_SIZE(smdk2440_devices));
 	smdk_machine_init();
 }
+```

@@ -53,13 +53,16 @@ static struct s3c2410_spi_info s3c2410_spi1_platdata = {
 ```c
 &s3c_device_spi0,  
 &s3c_device_spi1,  
+```
 最后在mini2440_machine_init函数中加入如下代码：
+```c
 s3c_device_spi0.dev.platform_data= &s3c2410_spi0_platdata;  
 spi_register_board_info(s3c2410_spi0_board, ARRAY_SIZE(s3c2410_spi0_board));  
 s3c_device_spi1.dev.platform_data= &s3c2410_spi1_platdata;  
 spi_register_board_info(s3c2410_spi1_board, ARRAY_SIZE(s3c2410_spi1_board)); 
-最后需要修改arch/arm/plat-s3c24xx/KConfig文件
 ```
+最后需要修改arch/arm/plat-s3c24xx/KConfig文件
+
 找到如下代码段：
 ```shell
 config S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13  

@@ -1,14 +1,17 @@
+spidev_test-->spi test
+spi_s3c24xx-->spi control driver
+devs-->spi control device
+spidev -->spi device (create user space fileoperate node)
 
 
-
-在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
+1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
 #include <linux/spi/spi.h>
 #include <../mach-s3c2410/include/mach/spi.h>
 然后加入如下代码：
 static struct spi_board_info s3c2410_spi0_board[] =  
 {  
         [0] = {  
-                .modalias = "spidev",  
+                .modalias = "spidev",  //需與spi device driver名字一致
                 .bus_num = 0,  
                 .chip_select = 0,  
                 .irq = IRQ_EINT9,  
@@ -83,8 +86,21 @@ config S3C24XX_SPI_BUS1_GPG5_GPG6_GPG7
           GPG5, GPG6 and GPG7.  
 最后我们配置编译文件：
 make menuconfig  
---------------------------------------------------------------------------------------
 
+
+--------------------------------------------------------------------------------------
+  SPI子系统从上到下分为：spi设备驱动层，核心层和master驱动层。其中master驱动抽象出spi控制器的相关操作，而spi设备驱动层抽象出了用户空间API。
+
+  platform_device结构中描述了SPI控制器的相关资源，同时在板级信息中将会添加spi设备的相关信息。master驱动将以platform_driver形式体现出来，也就是说
+
+在主控制器(master)和主控制器驱动将挂载到platform总线上。platform_driver的probe函数中将注册spi_master，同时将会获取在板级信息中添加的spi设备，将该
+
+信息转换成spi_device，然后注册spi_device到spi总线上。spi_driver结构用于描述spi设备驱动，也将挂载到spi总线上。连同spi_driver一起注册的是字符设备，该
+
+字符设备将提供5个API给用户空间。通过API，用户空间可以执行半双工读、半双工写和全双工读
+
+
+當spi
 
 
 

@@ -131,6 +131,12 @@ Device driver -->SPI support-->[*]samsung s3c23xx series SPI/[*]user mode SPI de
 
 當spi controller driver match spi controller device 調用probe function 由spi_bitbang_start调用一連串函數註冊device
 随后调用了scan_boardinfo,该函数中，遍历spi_board_info，通过bus_num完成SPI设备和SPI控制器的匹配，匹配成功则开始建立spi_device设备，该过程通过调用spi_new_device实现。
+```
+1.在SPI协议层中，spi_device是通过spi_register_board_info来注册的（注：上述做法需要在注册spi控制器驱动即spi_master之前）。首先创建一个spi_board_info结构描述spi设备板级信息，然后调spi_register_board_info()将其添加到board_list中。
+
+2.然后才继续调用spi_register_master注册SPI控制器驱动spi_master，此时会调用scan_boardinfo扫描board_list，根据 spi_board_info调用spi_new_device生成spi_device结构，并用spi_add_device添加设备。
+```
+
 
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_bitbang_star.png)
 

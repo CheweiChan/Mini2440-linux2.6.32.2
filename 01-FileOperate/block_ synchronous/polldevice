@@ -1,0 +1,107 @@
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/fs.h>
+#include <linux/errno.h>
+#include <linux/uaccess.h>
+#include <linux/delay.h>
+#include <linux/mm.h>
+#include <linux/types.h>
+#include <linux/init.h>
+#include <linux/interrupt.h>
+#include <linux/cdev.h>
+#include <linux/poll.h>
+#include <linux/io.h>
+#include <linux/system.h>
+#include <linux/atomic.h>
+#include <linux/miscdevice.h>
+#include "poll.h"
+
+
+struct poll_dev{
+int flag;
+wait_queue_head wq; 
+};
+
+
+#define DEVICE_NAME "poll_device"
+
+struct poll_dev dev;
+
+void timer_func(void)
+{
+    wake_up_interruptible(&dev.wq);
+    dev.flag=1;
+    mod_timer(&dev.timer,jiffies + HZ);
+}
+
+static int poll_open(struct inode *inode, struct file *filp)
+{
+    filp->private_data = &dev;
+	printk ("poll open\n");
+	return 0;
+}
+static int poll_release(struct inode *inode, struct file *filp)
+{
+	printk ("poll release\n");
+	return 0;
+}
+
+static ssize_t poll_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
+{
+      printk ("poll read\n");
+	  return 0;
+}
+
+static ssize_t poll_write(struct file *filp, const char *buf, size_t size, loff_t *f_pos) {
+
+     printk("poll write\n");
+
+return size;
+}
+
+
+
+static struct file_operations poll_fops =
+{
+	.owner   = THIS_MODULE,
+	.read    = poll_read,
+	.open    = poll_open,
+    .write = poll_write,
+	.release = poll_release,
+   // .ioctl = misc_ioctl,
+    .unlocked_ioctl = misc_ioctl,
+};
+
+static struct miscdevice misc_test = {
+	.minor = MISC_DYNAMIC_MINOR,
+	.name = "misc_test", //此名称将显示在/dev目录下面
+	.fops = &misc_fops,
+};
+
+static int __init dev_init(void)
+{
+	int ret = misc_register(&misc_test);
+	printk ("misc test initialized\n");
+	return ret;
+}
+
+static void __exit dev_exit(void)
+{
+	misc_deregister(&misc_test);
+	printk("misc test unloaded\n");
+}
+
+module_init(dev_init);
+module_exit(dev_exit);
+
+
+
+
+
+
+
+
+
+
+
+

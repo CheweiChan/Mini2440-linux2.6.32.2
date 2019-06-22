@@ -1,6 +1,9 @@
 spidev_test-->spi test
+
 spi_s3c24xx-->spi control driver
+
 devs-->spi control device
+
 spidev -->spi device (create user space fileoperate node)
 
 

@@ -1,2 +1,2 @@
 
-This is a mini2440 develop note
+ini2440 develop note

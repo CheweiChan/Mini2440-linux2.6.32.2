@@ -109,10 +109,15 @@ make menuconfig
 創建read/write/ioctrl
 
 調用read function
+
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_READ.jpg)
 
+
 調用write function
+
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_WRITE.jpg)
 
+
 調用ioctrl function
+
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_ioctrl.jpg)

@@ -5,13 +5,13 @@ spidev -->spi device (create user space fileoperate node)
 
 
 1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
-
-`#include <linux/spi/spi.h>
-#include <../mach-s3c2410/include/mach/spi.h>`
-
+```c
+#include <linux/spi/spi.h>
+#include <../mach-s3c2410/include/mach/spi.h>
+```
 然后加入如下代码：
 
-`static struct spi_board_info s3c2410_spi0_board[] =  
+`static struct spi_board_info s3c2410_spi0_board[] =`
 {  
         [0] = {  
                 .modalias = "spidev",  //需與spi device driver名字一致

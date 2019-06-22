@@ -1,4 +1,5 @@
 相關檔案:
+
 fbmem      (path:\linux-2.6.29\drivers\video)
 
 s3c2410fb  (path:\linux-2.6.29\drivers\video)
@@ -16,6 +17,7 @@ devs       (path:\linux-2.6.29\linux-2.6.29\arch\arm\plat-s3c24xx)
           s3c2410fb_map_video_memory()會初始化framebuffer內存空間
 
 C:\linux-2.6.29\arch\arm\mach-s3c2440\mach-smdk2440.c 增加:
+
 platform_device *smdk2440_devices[] add (&s3c_device_lcd)
 ```c
 /* LCD driver info */

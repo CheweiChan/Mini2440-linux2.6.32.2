@@ -113,7 +113,7 @@ make menuconfig
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_bitbang_star.png)
 
 ---------------------------------------------------------------------------------------------------
-創建read/write/ioctrl
+註冊spi device driver創建read/write/ioctrl
 
 調用read function
 

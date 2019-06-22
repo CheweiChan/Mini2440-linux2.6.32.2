@@ -100,8 +100,10 @@ make menuconfig
 字符设备将提供5个API给用户空间。通过API，用户空间可以执行半双工读、半双工写和全双工读
 
 
-當spi
+當spi controller driver match spi controller device 調用probe function 由spi_bitbang_start调用一連串函數註冊device
+随后调用了scan_boardinfo,该函数中，遍历spi_board_info，通过bus_num完成SPI设备和SPI控制器的匹配，匹配成功则开始建立spi_device设备，该过程通过调用spi_new_device实现。
 
+![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_bitbang_star.png)
 
 
 

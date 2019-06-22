@@ -10,7 +10,8 @@ spidev.c -->spi device (create user space fileoperate node)
 
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_IOdefine.png)
 
-SPI 子系統框架:
+SPI 子系統流程:
+
 1.注册平台设备
 
 2.注册平台驱动

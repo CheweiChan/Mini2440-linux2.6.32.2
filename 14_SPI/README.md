@@ -106,5 +106,10 @@ make menuconfig
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_bitbang_star.png)
 
 
+創建read/write/ioctrl
 
+![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_READ.JPG)
 
+![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_WRITE.JPG)
+
+![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_IOCTRL.JPG)

@@ -6,7 +6,7 @@ devs-->spi control device
 
 spidev -->spi device (create user space fileoperate node)
 
-
+-------------------------------------------------------------------------------------
 1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
 ```c
 #include <linux/spi/spi.h>

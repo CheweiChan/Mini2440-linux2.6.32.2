@@ -115,16 +115,16 @@ make menuconfig
 ---------------------------------------------------------------------------------------------------
 註冊spi device driver創建read/write/ioctrl
 
-調用read function
+調用read function 流程:
 
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_READ.jpg)
 
 
-調用write function
+調用write function 流程:
 
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_WRITE.jpg)
 
 
-調用ioctrl function
+調用ioctrl function 流程:
 
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/SPI_ioctrl.jpg)

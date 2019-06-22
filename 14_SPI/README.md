@@ -1,3 +1,5 @@
+相關檔案:
+
 spidev_test-->spi test
 
 spi_s3c24xx-->spi control driver

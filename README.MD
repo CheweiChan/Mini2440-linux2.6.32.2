@@ -1,2 +1,2 @@
 
-ini2440 develop note
+Mini2440 develop note

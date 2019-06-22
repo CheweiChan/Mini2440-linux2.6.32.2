@@ -5,9 +5,10 @@ spidev -->spi device (create user space fileoperate node)
 
 
 1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
-`#include <linux/spi/spi.h>`
-    #include <../mach-s3c2410/include/mach/spi.h>
+`#include <linux/spi/spi.h>
+#include <../mach-s3c2410/include/mach/spi.h>`
 然后加入如下代码：
+`
 static struct spi_board_info s3c2410_spi0_board[] =  
 {  
         [0] = {  
@@ -43,23 +44,20 @@ static struct s3c2410_spi_info s3c2410_spi1_platdata = {
         .num_cs = 1,  
         .bus_num = 1,  
         .gpio_setup = s3c24xx_spi_gpiocfg_bus1_gpg5_6_7,  
-};  
+}; `
 这里需要了解驱动架构，其中移植过程中容易出问题的地方时S3C2410_GPG(2)和S3C2410_GPG(3)两处地方，网上一般给的源代码是 S3C2410_GPG2，这在2.6.29中可行，但是在2.6.32源代码中没有定义S3C2410_GPG2宏定义，要使用 S3C2410_GPG(2)宏定义。
 在mini2440_devices[]平台数组中添加如下代码：
-&s3c_device_spi0,  
-&s3c_device_spi1,  
+`&s3c_device_spi0,  
+&s3c_device_spi1,  `
 最后在mini2440_machine_init函数中加入如下代码：
-view plain
-s3c_device_spi0.dev.platform_data= &s3c2410_spi0_platdata;  
+`s3c_device_spi0.dev.platform_data= &s3c2410_spi0_platdata;  
 spi_register_board_info(s3c2410_spi0_board, ARRAY_SIZE(s3c2410_spi0_board));  
 s3c_device_spi1.dev.platform_data= &s3c2410_spi1_platdata;  
-spi_register_board_info(s3c2410_spi1_board, ARRAY_SIZE(s3c2410_spi1_board));  
+spi_register_board_info(s3c2410_spi1_board, ARRAY_SIZE(s3c2410_spi1_board)); ` 
 最后需要修改arch/arm/plat-s3c24xx/KConfig文件
 
 找到如下代码段：
-
-view plain
-config S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13  
+`config S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13  
         bool   
         help  
           SPI GPIO configuration code for BUS0 when connected to  
@@ -69,11 +67,9 @@ config S3C24XX_SPI_BUS1_GPG5_GPG6_GPG7
         bool   
         help  
           SPI GPIO configuration code for BUS 1 when connected to  
-          GPG5, GPG6 and GPG7.  
-
+          GPG5, GPG6 and GPG7.  `
 修改为
-view plain
-config S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13  
+`config S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13  
         bool "S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13"  
         help  
           SPI GPIO configuration code for BUS0 when connected to  
@@ -83,9 +79,9 @@ config S3C24XX_SPI_BUS1_GPG5_GPG6_GPG7
         bool "S3C24XX_SPI_BUS1_GPG5_GPG6_GPG7"  
         help  
           SPI GPIO configuration code for BUS 1 when connected to  
-          GPG5, GPG6 and GPG7.  
+          GPG5, GPG6 and GPG7. ` 
 最后我们配置编译文件：
-make menuconfig  
+`make menuconfig`
 
 
 --------------------------------------------------------------------------------------

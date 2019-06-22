@@ -8,6 +8,10 @@ devs.c-->spi control device
 
 spidev.c -->spi device (create user space fileoperate node)
 
+IO Define
+
+![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_IOdefine.png)
+
 -------------------------------------------------------------------------------------
 1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
 ```c

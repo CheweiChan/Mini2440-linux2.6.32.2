@@ -5,11 +5,13 @@ spidev -->spi device (create user space fileoperate node)
 
 
 1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：
+
 `#include <linux/spi/spi.h>
 #include <../mach-s3c2410/include/mach/spi.h>`
+
 然后加入如下代码：
-`
-static struct spi_board_info s3c2410_spi0_board[] =  
+
+`static struct spi_board_info s3c2410_spi0_board[] =  
 {  
         [0] = {  
                 .modalias = "spidev",  //需與spi device driver名字一致
@@ -45,6 +47,7 @@ static struct s3c2410_spi_info s3c2410_spi1_platdata = {
         .bus_num = 1,  
         .gpio_setup = s3c24xx_spi_gpiocfg_bus1_gpg5_6_7,  
 }; `
+
 这里需要了解驱动架构，其中移植过程中容易出问题的地方时S3C2410_GPG(2)和S3C2410_GPG(3)两处地方，网上一般给的源代码是 S3C2410_GPG2，这在2.6.29中可行，但是在2.6.32源代码中没有定义S3C2410_GPG2宏定义，要使用 S3C2410_GPG(2)宏定义。
 在mini2440_devices[]平台数组中添加如下代码：
 `&s3c_device_spi0,  

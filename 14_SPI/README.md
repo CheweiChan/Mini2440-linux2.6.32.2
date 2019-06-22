@@ -1,12 +1,12 @@
 相關檔案:
 
-spidev_test-->spi test
+spidev_test.c-->spi test
 
-spi_s3c24xx-->spi control driver
+spi_s3c24xx.c-->spi control driver
 
-devs-->spi control device
+devs.c-->spi control device
 
-spidev -->spi device (create user space fileoperate node)
+spidev.c -->spi device (create user space fileoperate node)
 
 -------------------------------------------------------------------------------------
 1.在Linux Source Code中修改arch/arm/mach-s3c2440/mach-mini2440.c文件，加入头文件：

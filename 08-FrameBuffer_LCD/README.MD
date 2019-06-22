@@ -16,7 +16,7 @@ devs       (path:\linux-2.6.29\linux-2.6.29\arch\arm\plat-s3c24xx)
  裡面包含了register_framebuffer()(函數在fbmem.c裡),此函數會呼叫device_create創建chrdev(FB_MAJOR)的操作節點
           s3c2410fb_map_video_memory()會初始化framebuffer內存空間
 
-C:\linux-2.6.29\arch\arm\mach-s3c2440\mach-smdk2440.c 增加:
+C:\linux-2.6.29\arch\arm\mach-s3c2440\mach-smdk2440.c:
 
 platform_device *smdk2440_devices[] add (&s3c_device_lcd)
 ```c

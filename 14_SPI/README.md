@@ -8,17 +8,19 @@ devs.c-->spi control device
 
 spidev.c -->spi device (create user space fileoperate node)
 
-IO Define
-
 ![](https://github.com/CheweiChan/Mini2440-linux2.6.29/blob/master/IMG/spi_IOdefine.png)
 
-SPI 子系統流程
+SPI 子系統框架:
 1.注册平台设备
+
 2.注册平台驱动
   .probe()函数中注册描述spi控制器的spi_master
+  
 3.注册spi设备：spi_board_info
+
 4.注册spi_driver
   .probe()函数中注册描述外设的设备结构体，如char设备
+  
 5.用户操作API实现。read()/write()
 
 -------------------------------------------------------------------------------------

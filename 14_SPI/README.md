@@ -93,6 +93,10 @@ config S3C24XX_SPI_BUS1_GPG5_GPG6_GPG7
           GPG5, GPG6 and GPG7. 
 最后我们配置编译文件：
 make menuconfig
+
+system type-->[*]S3C24XX_SPI_BUS0_GPE11_GPE12_GPE13/[*]S3C24XX_SPI_BUS1_GPG5_GPG6_GPG7
+
+Device driver -->SPI support-->[*]samsung s3c23xx series SPI/[*]user mode SPI device driver support
 ```
 
 --------------------------------------------------------------------------------------

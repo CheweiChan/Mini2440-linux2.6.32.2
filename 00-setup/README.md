@@ -34,7 +34,9 @@ source ~/.bashrc
  
  
 可能遇到的問題:
+
 /*********************************************************************************************************/
+
 缺少 （build-essential） 编译库引起的编译问题。 
 HOSTCC scripts/basic/fixdep 
 scripts/basic/fixdep.c:106:23: fatal error: sys/types.h: No such file or directory 
@@ -45,7 +47,9 @@ make: *** [scripts_basic] Error 2
 apt-get install build-essential   
 sudo apt-get install build-essential linux-headers-$(uname -r) 安裝linux drv 開發套件 
 
+
 /*********************************************************************************************************/
+
 编译内核出现以下错误 
 Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at kernel/timeconst.pl line 373. 
 /root/working/Hi3520D_SDK_V2.0.3.0/osdrv/kernel/linux-3.0.y/kernel/Makefile:140: recipe for target 'kernel/timeconst.h' failed 
@@ -54,19 +58,28 @@ Makefile:945: recipe for target 'kernel' failed
 make: *** [kernel] Error 2 
 解决办法： 
 将kernel/timeconst.pl中第373行的defined()去掉只留下@val就可以了 
+
 /*********************************************************************************************************/
+
 yaffs2 文件系统 移植問題 
 https://blog.csdn.net/baijinglei12/article/details/7686528 
+
 /*********************************************************************************************************/
+
 Error 1 Makefile:454: recipe for target 'menuconfig' failed make: *** [menuconfig] Error 2  
 解决办法： 
 sudo apt-get install libncurses5-dev 
+
 /*********************************************************************************************************/
+
 查看rs232 port 
 cmd:dmesg | grep tty 
+
 /*********************************************************************************************************/
+
 linux 按 minitool 沒反應 
 安裝--> apt install libqtwebkit4 
+
 /*********************************************************************************************************/
 执行make menuconfig可能看如这样的错误： 
 *** Unable to find the ncurses libraries or the 

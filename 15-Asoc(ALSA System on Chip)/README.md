@@ -11,9 +11,7 @@ snd_soc_device结构体是对ASoC设备的整体封装，包括了封装板用�
  
 ASoC驱动有以下三部分组成：
 
-（1）CODEC驱动：由内核源代码sound/soc/codecs/uda134x.c实现
-
-實現audio controls/audio interface/capabilities/DAOM definition/codec IO functions
+（1）CODEC驱动：由内核源代码sound/soc/codecs/uda134x.c实现實現audio controls/audio interface/capabilities/DAOM definition/codec IO functions
  
 （2）平台驱动：由内核源代码sound/soc/s3c24xx/s3c24xx-i2s.c实现CPU端的DAI驱动，由sound/soc/s3c24xx/s3c24xx_pcm.c实现CPU端的DMA驱动
 

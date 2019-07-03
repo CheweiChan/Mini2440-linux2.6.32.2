@@ -11,11 +11,11 @@ snd_soc_device结构体是对ASoC设备的整体封装，包括了封装板用�
  
 ASoC驱动有以下三部分组成：
 
-（1）CODEC驱动：由内核源代码sound/soc/codecs/uda134x.c实现audio controls/audio interface/capabilities/DAOM definition/codec IO functions
+（1）CODEC驅動：由内核源代码sound/soc/codecs/uda134x.c实现audio controls/audio interface/capabilities/DAOM definition/codec IO functions
  
-（2）平台驱动：由内核源代码sound/soc/s3c24xx/s3c24xx-i2s.c实现CPU端的DAI驱动，由sound/soc/s3c24xx/s3c24xx_pcm.c实现CPU端的DMA驱动
+（2）平台驅動：由内核源代码sound/soc/s3c24xx/s3c24xx-i2s.c实现CPU端的DAI驱动，由sound/soc/s3c24xx/s3c24xx_pcm.c实现CPU端的DMA驱动
 
-（3）板驱动：由内核源代码sound/soc/s3c24xx/s3c24xx_uda134x.c实现，它将第一部分和第二部分进行绑定。
+（3）開發板驅動：由内核源代码sound/soc/s3c24xx/s3c24xx_uda134x.c实现，它将第一部分和第二部分进行绑定。
      在板驱动的模块初始化函数中，会通过platform_device_add()注册一个名为“soc-audio”的platform设备，这是因为soc-core.c注册了一个名为“soc-audio”的platform驱动，因此，在板驱动中注册“soc-audio”设备会引起两者的匹配，从而引发一系列的初始化操作。
 
 在以上三部分之上的是ASoC核心层，由内核源代码中的sound/soc/soc-core.c实现，查看其源代码发现它完全是一个传统的ALSA驱动。

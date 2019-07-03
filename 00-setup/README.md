@@ -43,6 +43,7 @@ scripts/basic/fixdep.c:106:23: fatal error: sys/types.h: No such file or directo
 compilation terminated. 
 make[1]: *** [scripts/basic/fixdep] Error 1 
 make: *** [scripts_basic] Error 2 
+
 解决方法如下： 
 apt-get install build-essential   
 sudo apt-get install build-essential linux-headers-$(uname -r) 安裝linux drv 開發套件 
@@ -56,6 +57,7 @@ Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at kerne
 make[1]: *** [kernel/timeconst.h] Error 255 
 Makefile:945: recipe for target 'kernel' failed 
 make: *** [kernel] Error 2 
+
 解决办法： 
 将kernel/timeconst.pl中第373行的defined()去掉只留下@val就可以了 
 
@@ -67,6 +69,7 @@ https://blog.csdn.net/baijinglei12/article/details/7686528
 /*********************************************************************************************************/
 
 Error 1 Makefile:454: recipe for target 'menuconfig' failed make: *** [menuconfig] Error 2  
+
 解决办法： 
 sudo apt-get install libncurses5-dev 
 
@@ -82,11 +85,16 @@ linux 按 minitool 沒反應
 
 /*********************************************************************************************************/
 
-执行make menuconfig可能看如这样的错误： 
+执行make menuconfig可能看如这样的错误：
+
 *** Unable to find the ncurses libraries or the 
+
 *** required header files. 
+
 *** ‘make menuconfig’ requires the ncurses libraries. 
+
 *** Install ncurses (ncurses-devel) and try again. 
+
 解决办法如下： 
 CentOS： 
 yum install -y ncurses-devel 

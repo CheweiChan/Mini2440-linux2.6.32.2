@@ -86,7 +86,6 @@ linux 按 minitool 沒反應
 *** Unable to find the ncurses libraries or the 
 *** required header files. 
 *** ‘make menuconfig’ requires the ncurses libraries. 
-*** 
 *** Install ncurses (ncurses-devel) and try again. 
 解决办法如下： 
 CentOS： 
